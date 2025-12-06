@@ -165,7 +165,7 @@
             margin-bottom: 30px;
         }
 
-        .year-card, .section-card, .subject-card {
+        .year-card, .section-card, .subject-card, .lesson-card {
             background: var(--card-bg);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
@@ -183,7 +183,7 @@
             border: 1px solid transparent;
         }
 
-        .year-card::before, .section-card::before, .subject-card::before {
+        .year-card::before, .section-card::before, .subject-card::before, .lesson-card::before {
             content: '';
             position: absolute;
             top: 0;
@@ -193,13 +193,13 @@
             background: var(--gradient-primary);
         }
 
-        .year-card:hover, .section-card:hover, .subject-card:hover {
+        .year-card:hover, .section-card:hover, .subject-card:hover, .lesson-card:hover {
             box-shadow: var(--shadow-lg);
             transform: translateY(-8px);
             border-color: var(--primary-light);
         }
 
-        .year-card i, .section-card i, .subject-card i {
+        .year-card i, .section-card i, .subject-card i, .lesson-card i {
             font-size: 48px;
             background: var(--gradient-primary);
             -webkit-background-clip: text;
@@ -208,27 +208,27 @@
             transition: var(--transition);
         }
 
-        .year-card h3, .section-card h3, .subject-card h3 {
+        .year-card h3, .section-card h3, .subject-card h3, .lesson-card h3 {
             font-size: 1.4rem;
             margin-bottom: 12px;
             font-weight: 700;
             color: var(--text-primary);
         }
 
-        .year-card p, .section-card p, .subject-card p {
+        .year-card p, .section-card p, .subject-card p, .lesson-card p {
             color: var(--text-secondary);
             font-size: 1rem;
             line-height: 1.5;
         }
 
-        .year-card.selected, .section-card.selected, .subject-card.selected {
+        .year-card.selected, .section-card.selected, .subject-card.selected, .lesson-card.selected {
             background: var(--gradient-primary);
             color: white;
             transform: scale(1.02);
         }
 
-        .year-card.selected i, .section-card.selected i, .subject-card.selected i,
-        .year-card.selected p, .section-card.selected p, .subject-card.selected p {
+        .year-card.selected i, .section-card.selected i, .subject-card.selected i, .lesson-card.selected i,
+        .year-card.selected p, .section-card.selected p, .subject-card.selected p, .lesson-card.selected p {
             color: white;
             background: none;
             -webkit-background-clip: unset;
@@ -236,14 +236,14 @@
         }
 
         /* Section Grid - تصميم حديث */
-        .section-grid {
+        .section-grid, .lesson-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
 
-        .section-card {
+        .section-card, .lesson-card {
             text-align: center;
             padding: 24px;
         }
@@ -278,33 +278,9 @@
             font-weight: 700;
         }
 
+        /* تم إخفاء المؤقت */
         .timer {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.1rem;
-            color: var(--primary);
-            background: rgba(67, 97, 238, 0.1);
-            padding: 10px 16px;
-            border-radius: 30px;
-            align-self: flex-start;
-            font-weight: 600;
-        }
-
-        .timer i {
-            font-size: 1.1rem;
-        }
-
-        .timer.warning {
-            color: var(--warning);
-            background: rgba(248, 150, 30, 0.1);
-            animation: pulse 1s infinite;
-        }
-
-        .timer.danger {
-            color: var(--danger);
-            background: rgba(247, 37, 133, 0.1);
-            animation: pulse 0.5s infinite;
+            display: none !important;
         }
 
         .progress-container {
@@ -690,6 +666,171 @@
 
         .back-btn i {
             font-size: 20px;
+        }
+
+        /* Loading Overlay - تصميم علمي حديث */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            color: white;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .scientific-loader {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .atom-core {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, #4cc9f0 0%, #4361ee 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(76, 201, 240, 0.5);
+            animation: pulseCore 2s infinite;
+        }
+
+        .electron-orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+        }
+
+        .electron-orbit:nth-child(1) {
+            width: 120px;
+            height: 120px;
+        }
+
+        .electron-orbit:nth-child(2) {
+            width: 160px;
+            height: 160px;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        .electron-orbit:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            transform: translate(-50%, -50%) rotate(30deg);
+        }
+
+        .electron {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: radial-gradient(circle, #f8961e 0%, #f9c74f 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(248, 150, 30, 0.8);
+        }
+
+        .electron-orbit:nth-child(1) .electron {
+            top: -8px;
+            left: 50%;
+            margin-left: -8px;
+            animation: orbit1 3s linear infinite;
+        }
+
+        .electron-orbit:nth-child(2) .electron {
+            top: -8px;
+            right: 50%;
+            margin-right: -8px;
+            animation: orbit2 2.5s linear infinite;
+        }
+
+        .electron-orbit:nth-child(3) .electron {
+            bottom: -8px;
+            left: 50%;
+            margin-left: -8px;
+            animation: orbit3 4s linear infinite;
+        }
+
+        .loading-text {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .loading-subtext {
+            font-size: 1rem;
+            opacity: 0.8;
+            text-align: center;
+            max-width: 300px;
+            line-height: 1.5;
+        }
+
+        .loading-dots {
+            display: inline-block;
+            width: 20px;
+            text-align: left;
+        }
+
+        .loading-dots::after {
+            content: '';
+            animation: dots 1.5s infinite;
+        }
+
+        @keyframes pulseCore {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 0 30px rgba(76, 201, 240, 0.5);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+                box-shadow: 0 0 50px rgba(76, 201, 240, 0.8);
+            }
+        }
+
+        @keyframes orbit1 {
+            0% {
+                transform: rotate(0deg) translate(60px) rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg) translate(60px) rotate(-360deg);
+            }
+        }
+
+        @keyframes orbit2 {
+            0% {
+                transform: rotate(0deg) translate(80px) rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg) translate(80px) rotate(-360deg);
+            }
+        }
+
+        @keyframes orbit3 {
+            0% {
+                transform: rotate(0deg) translate(40px) rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg) translate(40px) rotate(-360deg);
+            }
+        }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
         }
 
         /* Admin Panel - تصميم حديث ومحسن */
@@ -1161,50 +1302,6 @@
             margin-top: 24px;
         }
 
-        /* Loading Overlay - تصميم حديث */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 3000;
-            color: white;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-        }
-
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-            margin-bottom: 20px;
-        }
-
-        .loading-text {
-            font-size: 1.1rem;
-            letter-spacing: 0.5px;
-        }
-
-        .loading-dots::after {
-            content: '';
-            animation: dots 1.5s infinite;
-        }
-
-        @keyframes dots {
-            0%, 20% { content: '.'; }
-            40% { content: '..'; }
-            60%, 100% { content: '...'; }
-        }
-
         /* Overlay - تصميم حديث */
         .overlay {
             position: fixed;
@@ -1320,50 +1417,6 @@
             background: var(--success-light);
         }
 
-        /* Error Boundary - تصميم حديث */
-        .error-boundary {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--card-bg);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 30px;
-            z-index: 9999;
-            display: none;
-            text-align: center;
-        }
-
-        .error-boundary i {
-            font-size: 60px;
-            background: var(--gradient-danger);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 24px;
-        }
-
-        .error-boundary h2 {
-            margin-bottom: 20px;
-            background: var(--gradient-danger);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-size: 1.8rem;
-        }
-
-        .error-boundary p {
-            margin-bottom: 30px;
-            text-align: center;
-            max-width: 450px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
         /* Ad Container Styles - تصميم حديث */
         .ad-container {
             background: var(--gradient-warning);
@@ -1375,7 +1428,6 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-            animation: pulse 2s infinite;
         }
 
         .ad-container h3 {
@@ -1445,23 +1497,6 @@
             margin-top: 6px;
         }
 
-        /* Improved Loading - تصميم حديث */
-        .skeleton-loader {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-            border-radius: 8px;
-        }
-
-        @keyframes loading {
-            0% {
-                background-position: 200% 0;
-            }
-            100% {
-                background-position: -200% 0;
-            }
-        }
-
         /* Admin Toggle Button - تصميم حديث */
         .admin-toggle {
             position: fixed;
@@ -1479,7 +1514,6 @@
             box-shadow: var(--shadow-lg);
             transition: var(--transition);
             z-index: 100;
-            animation: pulse 2s infinite;
         }
 
         .admin-toggle:hover {
@@ -1537,119 +1571,77 @@
             color: #CD7F32;
         }
 
-        /* تحسينات تصميم إضافية */
-        .card-enhanced {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 28px;
-            transition: var(--transition);
-            border: none;
+        /* أنيميشن ثلاثي الأبعاد محسن */
+        .card-3d {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card-3d:hover {
+            transform: translateY(-12px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.15),
+                0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .year-card, .section-card, .subject-card, .lesson-card {
+            transform-style: preserve-3d;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .year-card:hover, .section-card:hover, .subject-card:hover, .lesson-card:hover {
+            transform: translateY(-10px) rotateX(3deg) rotateY(3deg) scale(1.02);
+        }
+
+        /* تأثيرات دخول محسنة */
+        @keyframes slideIn3D {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) rotateX(-10deg) scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0) scale(1);
+            }
+        }
+
+        .year-card, .section-card, .subject-card, .lesson-card {
+            animation: slideIn3D 0.6s ease-out forwards;
+        }
+
+        /* تأثيرات زر محسنة */
+        .btn-3d {
+            transform-style: preserve-3d;
             position: relative;
-            overflow: hidden;
-            margin-bottom: 24px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .card-enhanced::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: var(--gradient-primary);
+        .btn-3d:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 
+                0 10px 20px rgba(67, 97, 238, 0.25),
+                0 5px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .card-enhanced:hover {
-            box-shadow: var(--shadow-lg);
-            transform: translateY(-6px);
+        .btn-3d:active {
+            transform: translateY(2px) scale(0.98);
         }
 
-        /* تحسينات تصميم للأزرار */
-        .btn-enhanced {
-            padding: 16px 28px;
-            border: none;
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 700;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.1rem;
-            position: relative;
-            overflow: hidden;
+        /* تأثيرات الشعار المحسنة */
+        .logo-container {
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
 
-        .btn-enhanced::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
+        .logo-img {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.15));
         }
 
-        .btn-enhanced:hover::before {
-            left: 100%;
-        }
-
-        .btn-enhanced:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        /* تحسينات تصميم للشريط العلوي */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            margin-bottom: 30px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        /* تحسينات تصميم للشاشات الصغيرة */
-        .mobile-optimized {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .mobile-card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 24px;
-            transition: var(--transition);
-        }
-
-        .mobile-card:hover {
-            box-shadow: var(--shadow-lg);
-            transform: translateY(-3px);
-        }
-
-        /* تحسينات تصميم للشاشات الكبيرة */
-        @media (min-width: 1024px) {
-            .container {
-                max-width: 1200px;
-            }
-            
-            .year-selection {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            
-            .section-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        .logo-container:hover .logo-img {
+            transform: rotateY(12deg) scale(1.06);
+            filter: drop-shadow(0 6px 12px rgba(67, 97, 238, 0.4));
         }
 
         /* Responsive Styles - تصميم حديث */
@@ -1658,7 +1650,7 @@
                 grid-template-columns: 1fr;
             }
             
-            .section-grid {
+            .section-grid, .lesson-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -1715,12 +1707,7 @@
                 height: 40px;
             }
             
-            .floating-buttons {
-                bottom: 20px;
-                right: 20px;
-            }
-            
-            .floating-btn, .admin-toggle, .back-btn {
+            .back-btn, .admin-toggle {
                 width: 56px;
                 height: 56px;
             }
@@ -1810,103 +1797,6 @@
         .admin-panel::-webkit-scrollbar-thumb:hover {
             background: var(--primary-dark);
         }
-
-        /* أنيميشن ثلاثي الأبعاد محسن */
-        .card-3d {
-            transform-style: preserve-3d;
-            perspective: 1000px;
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .card-3d:hover {
-            transform: translateY(-12px) rotateX(5deg) rotateY(5deg);
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.15),
-                0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .year-card, .section-card, .subject-card {
-            transform-style: preserve-3d;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .year-card:hover, .section-card:hover, .subject-card:hover {
-            transform: translateY(-10px) rotateX(3deg) rotateY(3deg) scale(1.02);
-        }
-
-        /* تأثيرات دخول محسنة */
-        @keyframes slideIn3D {
-            0% {
-                opacity: 0;
-                transform: translateY(40px) rotateX(-10deg) scale(0.9);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) rotateX(0) scale(1);
-            }
-        }
-
-        .year-card, .section-card, .subject-card {
-            animation: slideIn3D 0.6s ease-out forwards;
-        }
-
-        /* تأثيرات النص المحسنة */
-        .text-glow {
-            text-shadow: 0 0 15px rgba(67, 97, 238, 0.4);
-        }
-
-        /* تأثيرات زر محسنة */
-        .btn-3d {
-            transform-style: preserve-3d;
-            position: relative;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .btn-3d:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 
-                0 10px 20px rgba(67, 97, 238, 0.25),
-                0 5px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-3d:active {
-            transform: translateY(2px) scale(0.98);
-        }
-
-        /* تأثيرات الشعار المحسنة */
-        .logo-container {
-            transform-style: preserve-3d;
-            perspective: 1000px;
-        }
-
-        .logo-img {
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.15));
-        }
-
-        .logo-container:hover .logo-img {
-            transform: rotateY(12deg) scale(1.06);
-            filter: drop-shadow(0 6px 12px rgba(67, 97, 238, 0.4));
-        }
-
-        /* تأثيرات المؤقت المحسنة */
-        .timer {
-            transform-style: preserve-3d;
-            transition: all 0.3s ease;
-        }
-
-        .timer.warning {
-            animation: pulse3D 1s infinite;
-        }
-
-        .timer.danger {
-            animation: pulse3D 0.5s infinite;
-        }
-
-        @keyframes pulse3D {
-            0%, 100% { transform: scale(1) rotateX(0); }
-            50% { transform: scale(1.06) rotateX(5deg); }
-        }
     </style>
 </head>
 <body>
@@ -1930,9 +1820,8 @@
             </button>
         </div>
         
-        <!-- عرض الصفوف الدراسية مباشرة عند فتح التطبيق -->
+        <!-- عرض الصفوف الدراسية -->
         <div id="year-selection-container" class="year-selection">
-            <!-- المرحلة الثانوية فقط -->
             <div class="year-card card-3d" data-year="secondary1">
                 <i class="fas fa-award"></i>
                 <h3>الصف الأول الثانوي</h3>
@@ -1953,25 +1842,47 @@
         <div id="section-selection-container" class="card" style="display: none;">
             <h2 class="text-center mb-3">اختر القسم</h2>
             <div class="section-grid" id="section-container">
-                <!-- سيتم ملؤها ديناميكيًا بناءً على الصف المختار -->
+                <!-- سيتم ملؤها ديناميكيًا -->
             </div>
         </div>
         
         <div id="subject-selection-container" class="card" style="display: none;">
             <h2 class="text-center mb-3">اختر المادة الدراسية</h2>
             <div class="section-grid" id="subject-container">
-                <!-- سيتم ملؤها ديناميكيًا بناءً على القسم المختار -->
+                <!-- سيتم ملؤها ديناميكيًا -->
+            </div>
+        </div>
+        
+        <!-- Container for Lesson Selection -->
+        <div id="lesson-selection-container" class="card" style="display: none;">
+            <h2 class="text-center mb-3">اختر الدرس</h2>
+            <div class="lesson-grid" id="lesson-container">
+                <!-- سيتم ملؤها ديناميكيًا -->
             </div>
         </div>
         
         <div class="quiz-container" id="quiz-container" style="display: none;">
+            <!-- تم تغيير تصميم التحميل إلى تصميم علمي -->
             <div class="loading-overlay" id="quiz-loading">
-                <div class="spinner"></div>
-                <div class="loading-text">جاري تحميل الإختبارات...</div>
+                <div class="scientific-loader">
+                    <div class="atom-core"></div>
+                    <div class="electron-orbit">
+                        <div class="electron"></div>
+                    </div>
+                    <div class="electron-orbit">
+                        <div class="electron"></div>
+                    </div>
+                    <div class="electron-orbit">
+                        <div class="electron"></div>
+                    </div>
+                </div>
+                <div class="loading-text">جاري تحميل الإختبارات<span class="loading-dots"></span></div>
+                <div class="loading-subtext">نظام إختبارات سلاح الأزهري - التعليم الذكي</div>
             </div>
             
             <div class="quiz-header">
                 <h2 id="quiz-title">اختبار إختبارات سلاح الأزهري</h2>
+                <!-- تم إخفاء المؤقت -->
                 <div class="timer" id="timer">
                     <i class="fas fa-clock"></i>
                     <span>الوقت المتبقي: 10:00</span>
@@ -2028,17 +1939,17 @@
         </div>
     </div>
     
-    <!-- زر الرجوع للخلف - تصميم حديث -->
+    <!-- زر الرجوع للخلف -->
     <div class="back-btn btn-3d" id="back-btn" style="display: none;">
         <i class="fas fa-arrow-left"></i>
     </div>
     
-    <!-- زر لوحة الإدارة العائم - تصميم حديث -->
+    <!-- زر لوحة الإدارة العائم -->
     <div class="admin-toggle btn-3d" id="admin-toggle">
         <i class="fas fa-cog"></i>
     </div>
     
-    <!-- لوحة التحكم العائمة - تصميم محسن -->
+    <!-- لوحة التحكم -->
     <div class="admin-panel" id="admin-panel">
         <div class="admin-header">
             <h2>
@@ -2070,6 +1981,10 @@
             <div class="admin-nav-item" data-tab="subjects">
                 <i class="fas fa-book"></i>
                 <span>إدارة المواد</span>
+            </div>
+            <div class="admin-nav-item" data-tab="lessons">
+                <i class="fas fa-book-open"></i>
+                <span>إدارة الدروس</span>
             </div>
             <div class="admin-nav-item" data-tab="ads">
                 <i class="fas fa-ad"></i>
@@ -2150,6 +2065,12 @@
                         <div class="form-group">
                             <label for="question-subject">المادة الدراسية:</label>
                             <select id="question-subject" class="form-control">
+                                <!-- سيتم ملؤها ديناميكيًا -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="question-lesson">الدرس:</label>
+                            <select id="question-lesson" class="form-control">
                                 <!-- سيتم ملؤها ديناميكيًا -->
                             </select>
                         </div>
@@ -2339,6 +2260,56 @@
                 </div>
             </div>
             
+            <!-- تبويب إدارة الدروس -->
+            <div id="lessons-tab" class="admin-tab-content">
+                <div class="admin-card">
+                    <h3><i class="fas fa-plus-circle"></i> إضافة درس جديد</h3>
+                    <div class="admin-form">
+                        <div class="form-group">
+                            <label for="new-lesson-name">اسم الدرس:</label>
+                            <input type="text" id="new-lesson-name" class="form-control" placeholder="أدخل اسم الدرس">
+                        </div>
+                        <div class="form-group">
+                            <label for="new-lesson-description">وصف الدرس:</label>
+                            <textarea id="new-lesson-description" class="form-control" placeholder="أدخل وصف الدرس"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="new-lesson-subject">المادة التابع لها:</label>
+                            <select id="new-lesson-subject" class="form-control">
+                                <!-- سيتم ملؤها ديناميكيًا -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="new-lesson-icon">أيقونة الدرس:</label>
+                            <select id="new-lesson-icon" class="form-control">
+                                <option value="fa-book-open">كتاب مفتوح</option>
+                                <option value="fa-chalkboard-teacher">سبورة</option>
+                                <option value="fa-graduation-cap">تخرج</option>
+                                <option value="fa-lightbulb">فكرة</option>
+                                <option value="fa-puzzle-piece">أحجية</option>
+                                <option value="fa-brain">عقل</option>
+                                <option value="fa-flask">تجربة</option>
+                                <option value="fa-calculator">حساب</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="new-lesson-order">ترتيب الدرس:</label>
+                            <input type="number" id="new-lesson-order" class="form-control" placeholder="ترتيب العرض" min="1" value="1">
+                        </div>
+                        <button class="btn-admin" id="add-lesson-btn">
+                            <i class="fas fa-plus"></i> إضافة درس
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="admin-card">
+                    <h3><i class="fas fa-list"></i> الدروس الحالية</h3>
+                    <div id="lessons-list" class="questions-list">
+                        <!-- سيتم ملؤها ديناميكيًا -->
+                    </div>
+                </div>
+            </div>
+            
             <!-- تبويب إدارة الإعلانات -->
             <div id="ads-tab" class="admin-tab-content">
                 <div class="admin-card">
@@ -2403,114 +2374,6 @@
         </div>
     </div>
     
-    <!-- نافذة تعديل السؤال - محسنة -->
-    <div class="edit-modal" id="edit-question-modal">
-        <div class="modal-box">
-            <h3><i class="fas fa-edit"></i> تعديل السؤال</h3>
-            <div class="admin-form">
-                <div class="form-group">
-                    <label for="edit-question-text">نص السؤال:</label>
-                    <textarea id="edit-question-text" class="form-control" rows="3" placeholder="أدخل نص السؤال هنا"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="edit-question-type">نوع السؤال:</label>
-                    <select id="edit-question-type" class="form-control">
-                        <option value="mcq">اختيار من متعدد</option>
-                        <option value="truefalse">صح أم خطأ</option>
-                    </select>
-                </div>
-                <div id="edit-mcq-options">
-                    <div class="form-group">
-                        <label>الخيارات:</label>
-                        <div class="edit-options-grid">
-                            <div class="edit-option-item">
-                                <label for="edit-option1">الخيار الأول</label>
-                                <input type="text" id="edit-option1" class="form-control" placeholder="الخيار الأول">
-                                <div class="correct-option-indicator">
-                                    <input type="radio" name="edit-correct-option" id="edit-correct-1" value="1">
-                                    <label for="edit-correct-1">الإجابة الصحيحة</label>
-                                </div>
-                            </div>
-                            <div class="edit-option-item">
-                                <label for="edit-option2">الخيار الثاني</label>
-                                <input type="text" id="edit-option2" class="form-control" placeholder="الخيار الثاني">
-                                <div class="correct-option-indicator">
-                                    <input type="radio" name="edit-correct-option" id="edit-correct-2" value="2">
-                                    <label for="edit-correct-2">الإجابة الصحيحة</label>
-                                </div>
-                            </div>
-                            <div class="edit-option-item">
-                                <label for="edit-option3">الخيار الثالث</label>
-                                <input type="text" id="edit-option3" class="form-control" placeholder="الخيار الثالث">
-                                <div class="correct-option-indicator">
-                                    <input type="radio" name="edit-correct-option" id="edit-correct-3" value="3">
-                                    <label for="edit-correct-3">الإجابة الصحيحة</label>
-                                </div>
-                            </div>
-                            <div class="edit-option-item">
-                                <label for="edit-option4">الخيار الرابع</label>
-                                <input type="text" id="edit-option4" class="form-control" placeholder="الخيار الرابع">
-                                <div class="correct-option-indicator">
-                                    <input type="radio" name="edit-correct-option" id="edit-correct-4" value="4">
-                                    <label for="edit-correct-4">الإجابة الصحيحة</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="edit-truefalse-options" style="display: none;">
-                    <div class="form-group">
-                        <label for="edit-tf-correct-answer">الإجابة الصحيحة:</label>
-                        <select id="edit-tf-correct-answer" class="form-control">
-                            <option value="true">صح</option>
-                            <option value="false">خطأ</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="edit-question-category">التصنيف:</label>
-                    <input type="text" id="edit-question-category" class="form-control" placeholder="تصنيف السؤال (اختياري)">
-                </div>
-                <div class="form-group">
-                    <label for="edit-question-difficulty">مستوى الصعوبة:</label>
-                    <select id="edit-question-difficulty" class="form-control">
-                        <option value="easy">سهل</option>
-                        <option value="medium">متوسط</option>
-                        <option value="hard">صعب</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="edit-question-year">الصف الدراسي:</label>
-                    <select id="edit-question-year" class="form-control">
-                        <option value="secondary1">الصف الأول الثانوي</option>
-                        <option value="secondary2">الصف الثاني الثانوي</option>
-                        <option value="secondary3">الصف الثالث الثانوي</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="edit-question-section">القسم:</label>
-                    <select id="edit-question-section" class="form-control">
-                        <!-- سيتم ملؤها ديناميكيًا -->
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="edit-question-subject">المادة الدراسية:</label>
-                    <select id="edit-question-subject" class="form-control">
-                        <!-- سيتم ملؤها ديناميكيًا -->
-                    </select>
-                </div>
-            </div>
-            <div class="modal-buttons">
-                <button class="btn-admin" id="save-edit-question-btn">
-                    <i class="fas fa-save"></i> حفظ التعديلات
-                </button>
-                <button class="btn btn-secondary" id="cancel-edit-question-btn">
-                    <i class="fas fa-times"></i> إلغاء
-                </button>
-            </div>
-        </div>
-    </div>
-    
     <!-- طبقة التعتيم -->
     <div class="overlay" id="overlay"></div>
     
@@ -2547,12 +2410,13 @@
         let categories = new Set();
         let quizStartTime;
         let timerInterval;
-        let timeLeft = 600;
         let selectedYear = '';
         let selectedSection = '';
         let selectedSubject = '';
+        let selectedLesson = '';
         let subjects = [];
         let sections = [];
+        let lessons = [];
         let examActive = true;
         let defaultExamTime = 10;
         let currentUser = null;
@@ -2592,6 +2456,7 @@
             yearSelectionContainer: document.getElementById('year-selection-container'),
             sectionSelectionContainer: document.getElementById('section-selection-container'),
             subjectSelectionContainer: document.getElementById('subject-selection-container'),
+            lessonSelectionContainer: document.getElementById('lesson-selection-container'),
             yearCards: document.querySelectorAll('.year-card'),
             backBtn: document.getElementById('back-btn'),
             adminNavItems: document.querySelectorAll('.admin-nav-item'),
@@ -2599,6 +2464,7 @@
             adContainer: document.getElementById('ad-container'),
             sectionContainer: document.getElementById('section-container'),
             subjectContainer: document.getElementById('subject-container'),
+            lessonContainer: document.getElementById('lesson-container'),
             adminToggle: document.getElementById('admin-toggle'),
             adClose: document.getElementById('ad-close'),
             adTitle: document.getElementById('ad-title'),
@@ -2635,36 +2501,21 @@
             subjectsList: document.getElementById('subjects-list'),
             questionSection: document.getElementById('question-section'),
             questionSubject: document.getElementById('question-subject'),
+            questionLesson: document.getElementById('question-lesson'),
+            newLessonName: document.getElementById('new-lesson-name'),
+            newLessonDescription: document.getElementById('new-lesson-description'),
+            newLessonSubject: document.getElementById('new-lesson-subject'),
+            newLessonIcon: document.getElementById('new-lesson-icon'),
+            newLessonOrder: document.getElementById('new-lesson-order'),
+            addLessonBtn: document.getElementById('add-lesson-btn'),
+            lessonsList: document.getElementById('lessons-list'),
             adTitleInput: document.getElementById('ad-title-input'),
             adDescriptionInput: document.getElementById('ad-description-input'),
             adUrlInput: document.getElementById('ad-url-input'),
             adStatusInput: document.getElementById('ad-status-input'),
             saveAdBtn: document.getElementById('save-ad-btn'),
             previewAdTitle: document.getElementById('preview-ad-title'),
-            previewAdDescription: document.getElementById('preview-ad-description'),
-            
-            // عناصر تعديل السؤال
-            editQuestionModal: document.getElementById('edit-question-modal'),
-            editQuestionText: document.getElementById('edit-question-text'),
-            editQuestionType: document.getElementById('edit-question-type'),
-            editMcqOptions: document.getElementById('edit-mcq-options'),
-            editTruefalseOptions: document.getElementById('edit-truefalse-options'),
-            editOption1: document.getElementById('edit-option1'),
-            editOption2: document.getElementById('edit-option2'),
-            editOption3: document.getElementById('edit-option3'),
-            editOption4: document.getElementById('edit-option4'),
-            editCorrectAnswer1: document.getElementById('edit-correct-1'),
-            editCorrectAnswer2: document.getElementById('edit-correct-2'),
-            editCorrectAnswer3: document.getElementById('edit-correct-3'),
-            editCorrectAnswer4: document.getElementById('edit-correct-4'),
-            editTfCorrectAnswer: document.getElementById('edit-tf-correct-answer'),
-            editQuestionCategory: document.getElementById('edit-question-category'),
-            editQuestionDifficulty: document.getElementById('edit-question-difficulty'),
-            editQuestionYear: document.getElementById('edit-question-year'),
-            editQuestionSection: document.getElementById('edit-question-section'),
-            editQuestionSubject: document.getElementById('edit-question-subject'),
-            saveEditQuestionBtn: document.getElementById('save-edit-question-btn'),
-            cancelEditQuestionBtn: document.getElementById('cancel-edit-question-btn')
+            previewAdDescription: document.getElementById('preview-ad-description')
         };
 
         // تهيئة التطبيق
@@ -2685,6 +2536,7 @@
         function loadInitialData() {
             loadSections();
             loadSubjects();
+            loadLessons();
         }
         
         // تحميل الأقسام
@@ -2719,6 +2571,22 @@
             });
         }
         
+        // تحميل الدروس
+        function loadLessons() {
+            const lessonsRef = database.ref('lessons');
+            lessonsRef.on('value', (snapshot) => {
+                lessons = [];
+                snapshot.forEach((childSnapshot) => {
+                    const lesson = childSnapshot.val();
+                    lesson.id = childSnapshot.key;
+                    lessons.push(lesson);
+                });
+                
+                // تحديث القوائم المنسدلة في لوحة الإدارة
+                updateLessonDropdowns();
+            });
+        }
+        
         // تحديث قوائم الأقسام المنسدلة
         function updateSectionDropdowns() {
             // تحديث قائمة الأقسام في إضافة سؤال
@@ -2729,17 +2597,6 @@
                     option.value = section.id;
                     option.textContent = section.name;
                     elements.questionSection.appendChild(option);
-                });
-            }
-            
-            // تحديث قائمة الأقسام في تعديل سؤال
-            if (elements.editQuestionSection) {
-                elements.editQuestionSection.innerHTML = '';
-                sections.forEach(section => {
-                    const option = document.createElement('option');
-                    option.value = section.id;
-                    option.textContent = section.name;
-                    elements.editQuestionSection.appendChild(option);
                 });
             }
             
@@ -2779,14 +2636,28 @@
                 });
             }
             
-            // تحديث قائمة المواد في تعديل سؤال
-            if (elements.editQuestionSubject) {
-                elements.editQuestionSubject.innerHTML = '<option value="">اختر المادة</option>';
+            // تحديث قائمة المواد في إضافة درس
+            if (elements.newLessonSubject) {
+                elements.newLessonSubject.innerHTML = '<option value="">اختر المادة</option>';
                 subjects.forEach(subject => {
                     const option = document.createElement('option');
                     option.value = subject.id;
                     option.textContent = subject.name;
-                    elements.editQuestionSubject.appendChild(option);
+                    elements.newLessonSubject.appendChild(option);
+                });
+            }
+        }
+        
+        // تحديث قوائم الدروس المنسدلة
+        function updateLessonDropdowns() {
+            // تحديث قائمة الدروس في إضافة سؤال
+            if (elements.questionLesson) {
+                elements.questionLesson.innerHTML = '<option value="">اختر الدرس (اختياري)</option>';
+                lessons.forEach(lesson => {
+                    const option = document.createElement('option');
+                    option.value = lesson.id;
+                    option.textContent = lesson.name;
+                    elements.questionLesson.appendChild(option);
                 });
             }
         }
@@ -2797,6 +2668,10 @@
                 selectedYear = savedState.selectedYear;
                 const yearCard = document.querySelector(`.year-card[data-year="${selectedYear}"]`);
                 if (yearCard) yearCard.click();
+                
+                if (savedState.selectedLesson) {
+                    selectedLesson = savedState.selectedLesson;
+                }
             }
         }
         
@@ -2806,7 +2681,8 @@
                 user: currentUser,
                 selectedYear: selectedYear,
                 selectedSection: selectedSection,
-                selectedSubject: selectedSubject
+                selectedSubject: selectedSubject,
+                selectedLesson: selectedLesson
             };
             localStorage.setItem('quizState', JSON.stringify(state));
         }
@@ -2831,7 +2707,20 @@
             
             // زر الرجوع للخلف
             elements.backBtn.addEventListener('click', function() {
-                if (elements.subjectSelectionContainer.style.display === 'block') {
+                if (elements.quizContainer.style.display === 'block') {
+                    elements.quizContainer.style.display = 'none';
+                    if (selectedLesson) {
+                        elements.lessonSelectionContainer.style.display = 'block';
+                    } else if (selectedSubject) {
+                        elements.subjectSelectionContainer.style.display = 'block';
+                    } else {
+                        elements.sectionSelectionContainer.style.display = 'block';
+                    }
+                } else if (elements.lessonSelectionContainer.style.display === 'block') {
+                    elements.lessonSelectionContainer.style.display = 'none';
+                    elements.subjectSelectionContainer.style.display = 'block';
+                    selectedLesson = '';
+                } else if (elements.subjectSelectionContainer.style.display === 'block') {
                     elements.subjectSelectionContainer.style.display = 'none';
                     elements.sectionSelectionContainer.style.display = 'block';
                     selectedSubject = '';
@@ -2840,13 +2729,6 @@
                     elements.yearSelectionContainer.style.display = 'grid';
                     elements.backBtn.style.display = 'none';
                     selectedSection = '';
-                } else if (elements.quizContainer.style.display === 'block') {
-                    elements.quizContainer.style.display = 'none';
-                    if (selectedSubject) {
-                        elements.subjectSelectionContainer.style.display = 'block';
-                    } else {
-                        elements.sectionSelectionContainer.style.display = 'block';
-                    }
                 }
                 
                 saveCurrentState();
@@ -2928,19 +2810,6 @@
                 });
             }
             
-            // تغيير نوع السؤال في تعديل السؤال
-            if (elements.editQuestionType) {
-                elements.editQuestionType.addEventListener('change', function() {
-                    if (this.value === 'mcq') {
-                        elements.editMcqOptions.style.display = 'block';
-                        elements.editTruefalseOptions.style.display = 'none';
-                    } else {
-                        elements.editMcqOptions.style.display = 'none';
-                        elements.editTruefalseOptions.style.display = 'block';
-                    }
-                });
-            }
-            
             // إضافة سؤال جديد
             if (elements.addQuestionBtn) {
                 elements.addQuestionBtn.addEventListener('click', addNewQuestion);
@@ -2961,17 +2830,9 @@
                 elements.addSubjectBtn.addEventListener('click', addNewSubject);
             }
             
-            // حفظ تعديل السؤال
-            if (elements.saveEditQuestionBtn) {
-                elements.saveEditQuestionBtn.addEventListener('click', saveEditedQuestion);
-            }
-            
-            // إلغاء تعديل السؤال
-            if (elements.cancelEditQuestionBtn) {
-                elements.cancelEditQuestionBtn.addEventListener('click', function() {
-                    elements.editQuestionModal.style.display = 'none';
-                    elements.overlay.classList.remove('active');
-                });
+            // إضافة درس جديد
+            if (elements.addLessonBtn) {
+                elements.addLessonBtn.addEventListener('click', addNewLesson);
             }
             
             // تصفية الأسئلة في لوحة الإدارة
@@ -3047,7 +2908,7 @@
                     <div class="no-questions" style="grid-column: 1 / -1;">
                         <i class="fas fa-info-circle"></i>
                         <h3>لا توجد أقسام متاحة</h3>
-                        <p>لم يتم إضافة أقسام لهذا الصف بعد. الرجاء التواصل مع المشرف لإضافة الأقسام.</p>
+                        <p>لم يتم إضافة أقسام لهذا الصف بعد.</p>
                     </div>
                 `;
             }
@@ -3081,11 +2942,8 @@
                         const subjectName = subjects.find(s => s.id === selectedSubject)?.name || '';
                         elements.quizTitle.textContent += ` - ${subjectName}`;
                         
-                        setTimeout(() => {
-                            elements.subjectSelectionContainer.style.display = 'none';
-                            elements.quizContainer.style.display = 'block';
-                            loadQuestions();
-                        }, 500);
+                        // عرض الدروس المتاحة لهذه المادة
+                        loadLessonsForSubject(selectedSubject);
                         
                         saveCurrentState();
                     });
@@ -3096,14 +2954,68 @@
                 elements.sectionSelectionContainer.style.display = 'none';
                 elements.subjectSelectionContainer.style.display = 'block';
             } else {
-                // عرض رسالة عدم وجود مواد
                 elements.subjectContainer.innerHTML = `
                     <div class="no-questions" style="grid-column: 1 / -1;">
                         <i class="fas fa-info-circle"></i>
                         <h3>لا توجد مواد متاحة</h3>
-                        <p>لم يتم إضافة مواد لهذا القسم بعد. الرجاء التواصل مع المشرف لإضافة المواد.</p>
+                        <p>لم يتم إضافة مواد لهذا القسم بعد.</p>
                     </div>
                 `;
+            }
+        }
+        
+        // تحميل الدروس للمادة المختارة
+        function loadLessonsForSubject(subjectId) {
+            elements.lessonContainer.innerHTML = '';
+            
+            // تصفية الدروس التي تنتمي للمادة المختارة
+            const subjectLessons = lessons.filter(lesson => 
+                lesson.subjectId === subjectId
+            );
+            
+            if (subjectLessons.length > 0) {
+                // فرز الدروس حسب الترتيب
+                subjectLessons.sort((a, b) => (a.order || 999) - (b.order || 999));
+                
+                subjectLessons.forEach(lesson => {
+                    const lessonCard = document.createElement('div');
+                    lessonCard.className = 'lesson-card card-3d';
+                    lessonCard.dataset.lesson = lesson.id;
+                    lessonCard.innerHTML = `
+                        <i class="fas ${lesson.icon}"></i>
+                        <h3>${lesson.name}</h3>
+                        <p>${lesson.description}</p>
+                    `;
+                    
+                    lessonCard.addEventListener('click', function() {
+                        document.querySelectorAll('.lesson-card').forEach(c => c.classList.remove('selected'));
+                        this.classList.add('selected');
+                        selectedLesson = this.dataset.lesson;
+                        
+                        const lessonName = lessons.find(l => l.id === selectedLesson)?.name || '';
+                        elements.quizTitle.textContent += ` - ${lessonName}`;
+                        
+                        setTimeout(() => {
+                            elements.lessonSelectionContainer.style.display = 'none';
+                            elements.quizContainer.style.display = 'block';
+                            loadQuestions();
+                        }, 500);
+                        
+                        saveCurrentState();
+                    });
+                    
+                    elements.lessonContainer.appendChild(lessonCard);
+                });
+                
+                elements.subjectSelectionContainer.style.display = 'none';
+                elements.lessonSelectionContainer.style.display = 'block';
+            } else {
+                // إذا لم يكن هناك دروس، انتقل مباشرة إلى الاختبارات
+                setTimeout(() => {
+                    elements.subjectSelectionContainer.style.display = 'none';
+                    elements.quizContainer.style.display = 'block';
+                    loadQuestions();
+                }, 500);
             }
         }
         
@@ -3121,10 +3033,11 @@
                     const question = childSnapshot.val();
                     question.id = childSnapshot.key;
                     
-                    // تصفية الأسئلة بناءً على الصف والقسم والمادة المختارة
+                    // تصفية الأسئلة بناءً على الصف والقسم والمادة والدرس
                     if (question.year === selectedYear && 
                         question.section === selectedSection && 
-                        (!selectedSubject || question.subject === selectedSubject)) {
+                        (!selectedSubject || question.subject === selectedSubject) &&
+                        (!selectedLesson || question.lesson === selectedLesson)) {
                         questions.push(question);
                         
                         if (question.category) {
@@ -3167,6 +3080,7 @@
                         
                         const sectionName = sections.find(s => s.id === question.section)?.name || question.section;
                         const subjectName = subjects.find(s => s.id === question.subject)?.name || question.subject;
+                        const lessonName = lessons.find(l => l.id === question.lesson)?.name || '';
                         
                         questionItem.innerHTML = `
                             <h4>${question.text}</h4>
@@ -3174,7 +3088,7 @@
                                 <span><i class="fas fa-graduation-cap"></i> ${getYearText(question.year)}</span>
                                 <span><i class="fas fa-layer-group"></i> ${sectionName}</span>
                                 <span><i class="fas fa-book"></i> ${subjectName || 'عام'}</span>
-                                <span><i class="fas fa-star"></i> ${getDifficultyText(question.difficulty)}</span>
+                                ${lessonName ? `<span><i class="fas fa-book-open"></i> ${lessonName}</span>` : ''}
                             </div>
                             <div class="options-list">
                                 ${question.type === 'mcq' ? `
@@ -3257,6 +3171,42 @@
             });
         }
         
+        // تحميل الدروس للإدارة
+        function loadLessonsForAdmin() {
+            const lessonsRef = database.ref('lessons');
+            lessonsRef.once('value', (snapshot) => {
+                const lessonsList = document.getElementById('lessons-list');
+                if (!lessonsList) return;
+                
+                lessonsList.innerHTML = '';
+                
+                snapshot.forEach((childSnapshot) => {
+                    const lesson = childSnapshot.val();
+                    lesson.id = childSnapshot.key;
+                    
+                    const subjectName = subjects.find(s => s.id === lesson.subjectId)?.name || lesson.subjectId;
+                    
+                    const lessonItem = document.createElement('div');
+                    lessonItem.className = 'question-item';
+                    lessonItem.innerHTML = `
+                        <h4><i class="fas ${lesson.icon}"></i> ${lesson.name}</h4>
+                        <div class="question-meta">
+                            <span><i class="fas fa-book"></i> ${subjectName}</span>
+                            <span><i class="fas fa-sort-numeric-up"></i> الترتيب: ${lesson.order || 1}</span>
+                        </div>
+                        <p>${lesson.description}</p>
+                        <div class="question-actions">
+                            <button class="btn-admin btn-sm btn-admin-danger" onclick="deleteLesson('${lesson.id}')">
+                                <i class="fas fa-trash"></i> حذف
+                            </button>
+                        </div>
+                    `;
+                    
+                    lessonsList.appendChild(lessonItem);
+                });
+            });
+        }
+        
         // تصفية الإختبارات حسب التصنيف
         function filterQuestionsByCategory(selectedCategory) {
             if (selectedCategory === 'all') {
@@ -3283,17 +3233,6 @@
             elements.quizLoading.style.display = 'none';
         }
         
-        // عرض رسالة عدم وجود إختبارات
-        function showNoQuestionsMessage() {
-            elements.questionContainer.innerHTML = `
-                <div class="no-questions">
-                    <i class="fas fa-info-circle"></i> لا توجد إختبارات متاحة حالياً للصف والقسم المحدد. الرجاء المحاولة لاحقاً.
-                </div>
-            `;
-            elements.nextBtn.style.display = 'none';
-            elements.submitBtn.style.display = 'none';
-        }
-        
         // تحديث قوائم التصنيفات
         function updateCategoryFilters() {
             elements.categorySelect.innerHTML = '';
@@ -3314,67 +3253,19 @@
             userAnswers = Array(questions.length).fill(null);
             showQuestion();
             updateProgressBar();
-            startTimer();
+            // تم إزالة بدء المؤقت
             elements.quizContainer.style.display = 'block';
             elements.resultsContainer.style.display = 'none';
             elements.backBtn.style.display = 'flex';
         }
         
-        // بدء المؤقت
-        function startTimer() {
-            quizStartTime = new Date();
-            clearInterval(timerInterval);
-            timeLeft = defaultExamTime * 60;
-            
-            updateTimerDisplay();
-            
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                updateTimerDisplay();
-                
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    submitQuiz();
-                }
-            }, 1000);
+        // تحديث شريط التقدم
+        function updateProgressBar() {
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            elements.progressBar.style.width = `${progress}%`;
         }
         
-        // تحديث عرض المؤقت
-        function updateTimerDisplay() {
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            elements.timerDisplay.querySelector('span').textContent = `الوقت المتبقي: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-            
-            if (timeLeft <= 120) {
-                elements.timerDisplay.classList.add('warning');
-            } else {
-                elements.timerDisplay.classList.remove('warning');
-            }
-            
-            if (timeLeft <= 60) {
-                elements.timerDisplay.classList.add('danger');
-            } else {
-                elements.timerDisplay.classList.remove('danger');
-            }
-        }
-        
-        // إيقاف المؤقت
-        function stopTimer() {
-            clearInterval(timerInterval);
-        }
-        
-        // حساب الوقت المستغرق
-        function calculateTimeTaken() {
-            const endTime = new Date();
-            const timeDiff = endTime - quizStartTime;
-            
-            const minutes = Math.floor(timeDiff / 60000);
-            const seconds = Math.floor((timeDiff % 60000) / 1000);
-            
-            return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-        }
-        
-        // عرض السؤال الحالي
+        // عرض السؤال الحالي (تم إخفاء مستوى الصعوبة)
         function showQuestion() {
             if (currentQuestionIndex >= questions.length) {
                 submitQuiz();
@@ -3384,10 +3275,10 @@
             const question = questions[currentQuestionIndex];
             let questionHTML = '';
             
+            // تم إزالة عرض مستوى الصعوبة
             questionHTML += `
                 <div class="question">
                     <h3><span class="question-number">${currentQuestionIndex + 1}</span> ${question.text}</h3>
-                    ${question.difficulty ? `<p><small>مستوى الصعوبة: ${getDifficultyText(question.difficulty)}</small></p>` : ''}
             `;
             
             if (question.type === 'mcq') {
@@ -3450,22 +3341,6 @@
             elements.submitBtn.style.display = currentQuestionIndex === questions.length - 1 ? 'flex' : 'none';
         }
         
-        // الحصول على نص مستوى الصعوبة
-        function getDifficultyText(difficulty) {
-            switch(difficulty) {
-                case 'easy': return 'سهل';
-                case 'medium': return 'متوسط';
-                case 'hard': return 'صعب';
-                default: return '';
-            }
-        }
-        
-        // تحديث شريط التقدم
-        function updateProgressBar() {
-            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
-            elements.progressBar.style.width = `${progress}%`;
-        }
-        
         // الانتقال إلى السؤال التالي
         function nextQuestion() {
             if (currentQuestionIndex < questions.length - 1) {
@@ -3486,7 +3361,7 @@
         
         // إرسال الاختبار
         function submitQuiz() {
-            stopTimer();
+            // تم إزالة إيقاف المؤقت
             showResults();
         }
         
@@ -3531,23 +3406,39 @@
             }
             elements.percentageDisplay.innerHTML += ` ${medal}`;
             
-            elements.timeTakenDisplay.textContent = calculateTimeTaken();
+            // حساب الوقت المستغرق
+            const timeTaken = calculateTimeTaken();
+            elements.timeTakenDisplay.textContent = timeTaken;
             elements.feedbackDisplay.innerHTML = feedbackHTML;
             
-            saveQuizResult(score, questions.length);
+            saveQuizResult(score, questions.length, timeTaken);
+        }
+        
+        // حساب الوقت المستغرق
+        function calculateTimeTaken() {
+            if (!quizStartTime) return '00:00';
+            
+            const endTime = new Date();
+            const timeDiff = endTime - quizStartTime;
+            
+            const minutes = Math.floor(timeDiff / 60000);
+            const seconds = Math.floor((timeDiff % 60000) / 1000);
+            
+            return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
         }
         
         // حفظ نتيجة الاختبار
-        function saveQuizResult(score, totalQuestions) {
+        function saveQuizResult(score, totalQuestions, timeTaken) {
             const result = {
                 score,
                 totalQuestions,
                 percentage: Math.round((score / totalQuestions) * 100),
                 timestamp: new Date().toISOString(),
-                timeTaken: calculateTimeTaken(),
+                timeTaken: timeTaken,
                 year: selectedYear,
                 section: selectedSection,
                 subject: selectedSubject,
+                lesson: selectedLesson,
                 userId: currentUser ? currentUser.id : null,
                 userName: currentUser ? currentUser.name : 'زائر'
             };
@@ -3579,7 +3470,7 @@
             startQuiz();
         }
         
-        // الحصول على نص الصف الدراسي (تم التحديث للمرحلة الثانوية)
+        // الحصول على نص الصف الدراسي
         function getYearText(year) {
             switch(year) {
                 case 'secondary1': return 'الصف الأول الثانوي';
@@ -3616,6 +3507,7 @@
                 loadQuestionsForAdmin();
                 loadSectionsForAdmin();
                 loadSubjectsForAdmin();
+                loadLessonsForAdmin();
             } else {
                 elements.passwordError.style.display = 'block';
             }
@@ -3711,6 +3603,20 @@
             }
         }
         
+        // حذف درس
+        function deleteLesson(lessonId) {
+            if (confirm('هل أنت متأكد من حذف هذا الدرس؟ سيتم حذف جميع الأسئلة المرتبطة به.')) {
+                database.ref('lessons/' + lessonId).remove()
+                    .then(() => {
+                        alert('تم حذف الدرس بنجاح');
+                        loadLessonsForAdmin();
+                    })
+                    .catch(error => {
+                        alert('حدث خطأ أثناء حذف الدرس: ' + error.message);
+                    });
+            }
+        }
+        
         // حذف سؤال
         function deleteQuestion(questionId) {
             if (confirm('هل أنت متأكد من حذف هذا السؤال؟')) {
@@ -3725,122 +3631,21 @@
             }
         }
         
-        // تعديل سؤال - محسّن
+        // تعديل سؤال
         function editQuestion(questionId) {
-            currentEditingQuestionId = questionId;
-            
-            const questionsRef = database.ref('questions/' + questionId);
-            questionsRef.once('value', (snapshot) => {
-                const question = snapshot.val();
-                
-                // تعبئة الحقول ببيانات السؤال
-                elements.editQuestionText.value = question.text;
-                elements.editQuestionType.value = question.type;
-                elements.editQuestionCategory.value = question.category || '';
-                elements.editQuestionDifficulty.value = question.difficulty;
-                elements.editQuestionYear.value = question.year;
-                elements.editQuestionSection.value = question.section;
-                elements.editQuestionSubject.value = question.subject || '';
-                
-                if (question.type === 'mcq') {
-                    elements.editMcqOptions.style.display = 'block';
-                    elements.editTruefalseOptions.style.display = 'none';
-                    
-                    elements.editOption1.value = question.option1 || '';
-                    elements.editOption2.value = question.option2 || '';
-                    elements.editOption3.value = question.option3 || '';
-                    elements.editOption4.value = question.option4 || '';
-                    
-                    // تحديد الإجابة الصحيحة
-                    document.querySelectorAll('input[name="edit-correct-option"]').forEach(radio => {
-                        radio.checked = radio.value === question.correctAnswer;
-                    });
-                } else {
-                    elements.editMcqOptions.style.display = 'none';
-                    elements.editTruefalseOptions.style.display = 'block';
-                    
-                    elements.editTfCorrectAnswer.value = question.correctAnswer;
-                }
-                
-                // عرض نافذة التعديل
-                elements.editQuestionModal.style.display = 'flex';
-                elements.overlay.classList.add('active');
-            });
+            // يمكن إضافة نافذة تعديل السؤال هنا إذا لزم الأمر
+            alert('ميزة تعديل السؤال قيد التطوير');
         }
         
-        // حفظ السؤال بعد التعديل - محسّن
-        function saveEditedQuestion() {
-            const questionText = elements.editQuestionText.value.trim();
-            const questionType = elements.editQuestionType.value;
-            const category = elements.editQuestionCategory.value.trim();
-            const difficulty = elements.editQuestionDifficulty.value;
-            const year = elements.editQuestionYear.value;
-            const section = elements.editQuestionSection.value;
-            const subject = elements.editQuestionSubject.value;
-            
-            if (!questionText) {
-                alert('الرجاء إدخال نص السؤال');
-                return;
-            }
-            
-            if (!section) {
-                alert('الرجاء اختيار قسم');
-                return;
-            }
-            
-            let correctAnswer;
-            let questionData = {
-                text: questionText,
-                type: questionType,
-                category: category || '',
-                difficulty,
-                year,
-                section,
-                subject: subject || '',
-                updatedAt: new Date().toISOString()
-            };
-            
-            if (questionType === 'mcq') {
-                // الحصول على الإجابة الصحيحة
-                const correctOption = document.querySelector('input[name="edit-correct-option"]:checked');
-                if (!correctOption) {
-                    alert('الرجاء اختيار الإجابة الصحيحة');
-                    return;
-                }
-                correctAnswer = correctOption.value;
-                
-                for (let i = 1; i <= 4; i++) {
-                    const optionValue = document.getElementById(`edit-option${i}`).value.trim();
-                    if (optionValue) {
-                        questionData[`option${i}`] = optionValue;
-                    }
-                }
-                
-                if (!questionData.option1 || !questionData.option2) {
-                    alert('الرجاء إدخال خيارين على الأقل');
-                    return;
-                }
-            } else {
-                correctAnswer = elements.editTfCorrectAnswer.value;
-            }
-            
-            questionData.correctAnswer = correctAnswer;
-            
-            const questionsRef = database.ref('questions/' + currentEditingQuestionId);
-            questionsRef.update(questionData)
-                .then(() => {
-                    alert('تم تعديل السؤال بنجاح');
-                    
-                    // إغلاق نافذة التعديل
-                    elements.editQuestionModal.style.display = 'none';
-                    elements.overlay.classList.remove('active');
-                    
-                    // إعادة تحميل قائمة الأسئلة
-                    loadQuestionsForAdmin();
-                })
-                .catch(error => {
-                    alert('حدث خطأ أثناء تعديل السؤال: ' + error.message);
-                });
+        // عرض رسالة عدم وجود إختبارات
+        function showNoQuestionsMessage() {
+            elements.questionContainer.innerHTML = `
+                <div class="no-questions">
+                    <i class="fas fa-info-circle"></i> لا توجد إختبارات متاحة حالياً للصف والقسم المحدد.
+                </div>
+            `;
+            elements.nextBtn.style.display = 'none';
+            elements.submitBtn.style.display = 'none';
         }
         
         // مراقبة حالة الاختبار
@@ -3878,6 +3683,7 @@
             const year = document.getElementById('question-year').value;
             const section = document.getElementById('question-section').value;
             const subject = document.getElementById('question-subject').value;
+            const lesson = document.getElementById('question-lesson').value;
             
             if (!questionText) {
                 alert('الرجاء إدخال نص السؤال');
@@ -3898,6 +3704,7 @@
                 year,
                 section,
                 subject: subject || '',
+                lesson: lesson || '',
                 createdAt: new Date().toISOString()
             };
             
@@ -3932,6 +3739,7 @@
                     for (let i = 1; i <= 4; i++) {
                         document.getElementById(`option${i}`).value = '';
                     }
+                    document.getElementById('question-lesson').value = '';
                     
                     // إعادة تحميل قائمة الأسئلة
                     loadQuestionsForAdmin();
@@ -4026,6 +3834,51 @@
                 });
         }
         
+        // إضافة درس جديد
+        function addNewLesson() {
+            const lessonName = elements.newLessonName.value.trim();
+            const lessonDescription = elements.newLessonDescription.value.trim();
+            const lessonSubject = elements.newLessonSubject.value;
+            const lessonIcon = elements.newLessonIcon.value;
+            const lessonOrder = parseInt(elements.newLessonOrder.value) || 1;
+            
+            if (!lessonName) {
+                alert('الرجاء إدخال اسم الدرس');
+                return;
+            }
+            
+            if (!lessonSubject) {
+                alert('الرجاء اختيار المادة');
+                return;
+            }
+            
+            const lessonData = {
+                name: lessonName,
+                description: lessonDescription,
+                subjectId: lessonSubject,
+                icon: lessonIcon,
+                order: lessonOrder,
+                createdAt: new Date().toISOString()
+            };
+            
+            const lessonsRef = database.ref('lessons');
+            lessonsRef.push(lessonData)
+                .then(() => {
+                    alert('تمت إضافة الدرس بنجاح');
+                    
+                    // مسح الحقول
+                    elements.newLessonName.value = '';
+                    elements.newLessonDescription.value = '';
+                    elements.newLessonOrder.value = '1';
+                    
+                    // إعادة تحميل قائمة الدروس
+                    loadLessonsForAdmin();
+                })
+                .catch(error => {
+                    alert('حدث خطأ أثناء إضافة الدرس: ' + error.message);
+                });
+        }
+        
         // حفظ إعدادات النظام
         function saveSystemSettings() {
             const examTime = parseInt(elements.examTime.value);
@@ -4064,11 +3917,20 @@
             elements.adminTabContents.forEach(c => c.classList.remove('active'));
             
             document.querySelector(`.admin-nav-item[data-tab="${tabId}"]`).classList.add('active');
-            document.getElementById(`${tabId}-tab`).classList.add('active');
-            
-            // عند التبديل إلى تبويب الأسئلة، قم بتحميلها
-            if (tabId === 'questions') {
-                loadQuestionsForAdmin();
+            const tabElement = document.getElementById(`${tabId}-tab`);
+            if (tabElement) {
+                tabElement.classList.add('active');
+                
+                // تحميل البيانات عند التبديل للتبويب
+                if (tabId === 'questions') {
+                    loadQuestionsForAdmin();
+                } else if (tabId === 'lessons') {
+                    loadLessonsForAdmin();
+                } else if (tabId === 'sections') {
+                    loadSectionsForAdmin();
+                } else if (tabId === 'subjects') {
+                    loadSubjectsForAdmin();
+                }
             }
         }
         
