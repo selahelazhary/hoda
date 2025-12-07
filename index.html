@@ -1046,12 +1046,25 @@
             box-shadow: 0 6px 20px rgba(67, 97, 238, 0.3);
         }
 
+        /* تحسين أزرار الإدارة */
+        .btn-admin-warning {
+            background: var(--gradient-warning);
+        }
+
+        .btn-admin-warning:hover {
+            background: var(--warning-light);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(248, 150, 30, 0.3);
+        }
+
         .btn-admin-danger {
             background: var(--gradient-danger);
         }
 
         .btn-admin-danger:hover {
             background: var(--danger-light);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(247, 37, 133, 0.3);
         }
 
         .questions-list {
@@ -1268,7 +1281,7 @@
             border-radius: var(--radius-lg);
             padding: 30px;
             width: 90%;
-            max-width: 450px;
+            max-width: 550px;
             box-shadow: var(--shadow-lg);
             animation: modalSlideIn 0.3s ease-out;
             position: relative;
@@ -3101,10 +3114,10 @@
                                 `}
                             </div>
                             <div class="question-actions">
-                                <button class="btn-admin btn-sm" onclick="editQuestion('${question.id}')">
+                                <button class="btn-admin btn-admin-warning btn-sm" onclick="editQuestion('${question.id}')">
                                     <i class="fas fa-edit"></i> تعديل
                                 </button>
-                                <button class="btn-admin btn-sm btn-admin-danger" onclick="deleteQuestion('${question.id}')">
+                                <button class="btn-admin btn-admin-danger btn-sm" onclick="deleteQuestion('${question.id}')">
                                     <i class="fas fa-trash"></i> حذف
                                 </button>
                             </div>
@@ -3196,7 +3209,7 @@
                         </div>
                         <p>${lesson.description}</p>
                         <div class="question-actions">
-                            <button class="btn-admin btn-sm btn-admin-danger" onclick="deleteLesson('${lesson.id}')">
+                            <button class="btn-admin btn-admin-danger btn-sm" onclick="deleteLesson('${lesson.id}')">
                                 <i class="fas fa-trash"></i> حذف
                             </button>
                         </div>
@@ -3532,7 +3545,7 @@
                         </div>
                         <p>${section.description}</p>
                         <div class="question-actions">
-                            <button class="btn-admin btn-sm btn-admin-danger" onclick="deleteSection('${section.id}')">
+                            <button class="btn-admin btn-admin-danger btn-sm" onclick="deleteSection('${section.id}')">
                                 <i class="fas fa-trash"></i> حذف
                             </button>
                         </div>
@@ -3564,7 +3577,7 @@
                         </div>
                         <p>${subject.description}</p>
                         <div class="question-actions">
-                            <button class="btn-admin btn-sm btn-admin-danger" onclick="deleteSubject('${subject.id}')">
+                            <button class="btn-admin btn-admin-danger btn-sm" onclick="deleteSubject('${subject.id}')">
                                 <i class="fas fa-trash"></i> حذف
                             </button>
                         </div>
@@ -3631,10 +3644,276 @@
             }
         }
         
-        // تعديل سؤال
+        // تعديل سؤال - النسخة المحسنة
         function editQuestion(questionId) {
-            // يمكن إضافة نافذة تعديل السؤال هنا إذا لزم الأمر
-            alert('ميزة تعديل السؤال قيد التطوير');
+            currentEditingQuestionId = questionId;
+            
+            const questionsRef = database.ref('questions/' + questionId);
+            questionsRef.once('value', (snapshot) => {
+                if (snapshot.exists()) {
+                    const question = snapshot.val();
+                    
+                    // إنشاء نافذة تعديل السؤال
+                    const editModal = document.createElement('div');
+                    editModal.className = 'edit-modal';
+                    editModal.id = 'edit-question-modal';
+                    editModal.innerHTML = `
+                        <div class="modal-box">
+                            <h3><i class="fas fa-edit"></i> تعديل السؤال</h3>
+                            
+                            <div class="form-group">
+                                <label for="edit-question-text">نص السؤال:</label>
+                                <textarea id="edit-question-text" class="form-control" rows="3">${question.text}</textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edit-question-type">نوع السؤال:</label>
+                                <select id="edit-question-type" class="form-control">
+                                    <option value="mcq" ${question.type === 'mcq' ? 'selected' : ''}>اختيار من متعدد</option>
+                                    <option value="truefalse" ${question.type === 'truefalse' ? 'selected' : ''}>صح أم خطأ</option>
+                                </select>
+                            </div>
+                            
+                            <div id="edit-mcq-options" style="${question.type === 'mcq' ? 'display: block;' : 'display: none;'}">
+                                <div class="edit-options-grid">
+                                    <div class="edit-option-item">
+                                        <label>الخيار الأول:</label>
+                                        <input type="text" id="edit-option1" class="form-control" value="${question.option1 || ''}">
+                                        <div class="correct-option-indicator">
+                                            <input type="radio" name="edit-correct-answer" value="1" ${question.correctAnswer === '1' ? 'checked' : ''}>
+                                            <label>إجابة صحيحة</label>
+                                        </div>
+                                    </div>
+                                    <div class="edit-option-item">
+                                        <label>الخيار الثاني:</label>
+                                        <input type="text" id="edit-option2" class="form-control" value="${question.option2 || ''}">
+                                        <div class="correct-option-indicator">
+                                            <input type="radio" name="edit-correct-answer" value="2" ${question.correctAnswer === '2' ? 'checked' : ''}>
+                                            <label>إجابة صحيحة</label>
+                                        </div>
+                                    </div>
+                                    <div class="edit-option-item">
+                                        <label>الخيار الثالث:</label>
+                                        <input type="text" id="edit-option3" class="form-control" value="${question.option3 || ''}">
+                                        <div class="correct-option-indicator">
+                                            <input type="radio" name="edit-correct-answer" value="3" ${question.correctAnswer === '3' ? 'checked' : ''}>
+                                            <label>إجابة صحيحة</label>
+                                        </div>
+                                    </div>
+                                    <div class="edit-option-item">
+                                        <label>الخيار الرابع:</label>
+                                        <input type="text" id="edit-option4" class="form-control" value="${question.option4 || ''}">
+                                        <div class="correct-option-indicator">
+                                            <input type="radio" name="edit-correct-answer" value="4" ${question.correctAnswer === '4' ? 'checked' : ''}>
+                                            <label>إجابة صحيحة</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="edit-truefalse-options" style="${question.type === 'truefalse' ? 'display: block;' : 'display: none;'}">
+                                <div class="form-group">
+                                    <label for="edit-tf-correct-answer">الإجابة الصحيحة:</label>
+                                    <select id="edit-tf-correct-answer" class="form-control">
+                                        <option value="true" ${question.correctAnswer === 'true' ? 'selected' : ''}>صح</option>
+                                        <option value="false" ${question.correctAnswer === 'false' ? 'selected' : ''}>خطأ</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edit-question-category">التصنيف:</label>
+                                <input type="text" id="edit-question-category" class="form-control" value="${question.category || ''}" placeholder="تصنيف السؤال (اختياري)">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edit-question-difficulty">مستوى الصعوبة:</label>
+                                <select id="edit-question-difficulty" class="form-control">
+                                    <option value="easy" ${question.difficulty === 'easy' ? 'selected' : ''}>سهل</option>
+                                    <option value="medium" ${question.difficulty === 'medium' ? 'selected' : ''}>متوسط</option>
+                                    <option value="hard" ${question.difficulty === 'hard' ? 'selected' : ''}>صعب</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edit-question-year">الصف الدراسي:</label>
+                                <select id="edit-question-year" class="form-control">
+                                    <option value="secondary1" ${question.year === 'secondary1' ? 'selected' : ''}>الصف الأول الثانوي</option>
+                                    <option value="secondary2" ${question.year === 'secondary2' ? 'selected' : ''}>الصف الثاني الثانوي</option>
+                                    <option value="secondary3" ${question.year === 'secondary3' ? 'selected' : ''}>الصف الثالث الثانوي</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edit-question-section">القسم:</label>
+                                <select id="edit-question-section" class="form-control">
+                                    ${sections.map(section => `
+                                        <option value="${section.id}" ${question.section === section.id ? 'selected' : ''}>${section.name}</option>
+                                    `).join('')}
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edit-question-subject">المادة الدراسية:</label>
+                                <select id="edit-question-subject" class="form-control">
+                                    <option value="">اختر المادة</option>
+                                    ${subjects.map(subject => `
+                                        <option value="${subject.id}" ${question.subject === subject.id ? 'selected' : ''}>${subject.name}</option>
+                                    `).join('')}
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edit-question-lesson">الدرس:</label>
+                                <select id="edit-question-lesson" class="form-control">
+                                    <option value="">اختر الدرس (اختياري)</option>
+                                    ${lessons.map(lesson => `
+                                        <option value="${lesson.id}" ${question.lesson === lesson.id ? 'selected' : ''}>${lesson.name}</option>
+                                    `).join('')}
+                                </select>
+                            </div>
+                            
+                            <div class="modal-buttons">
+                                <button class="btn-admin" id="save-edit-btn">
+                                    <i class="fas fa-save"></i> حفظ التعديلات
+                                </button>
+                                <button class="btn btn-secondary" id="cancel-edit-btn">
+                                    <i class="fas fa-times"></i> إلغاء
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    document.body.appendChild(editModal);
+                    
+                    // عرض النافذة
+                    editModal.style.display = 'flex';
+                    elements.overlay.classList.add('active');
+                    
+                    // إضافة مستمعي الأحداث
+                    const editQuestionType = editModal.querySelector('#edit-question-type');
+                    const editMcqOptions = editModal.querySelector('#edit-mcq-options');
+                    const editTruefalseOptions = editModal.querySelector('#edit-truefalse-options');
+                    const saveEditBtn = editModal.querySelector('#save-edit-btn');
+                    const cancelEditBtn = editModal.querySelector('#cancel-edit-btn');
+                    
+                    // تغيير نوع السؤال
+                    editQuestionType.addEventListener('change', function() {
+                        if (this.value === 'mcq') {
+                            editMcqOptions.style.display = 'block';
+                            editTruefalseOptions.style.display = 'none';
+                        } else {
+                            editMcqOptions.style.display = 'none';
+                            editTruefalseOptions.style.display = 'block';
+                        }
+                    });
+                    
+                    // حفظ التعديلات
+                    saveEditBtn.addEventListener('click', function() {
+                        saveQuestionEdit(questionId, editModal);
+                    });
+                    
+                    // إلغاء التعديل
+                    cancelEditBtn.addEventListener('click', function() {
+                        document.body.removeChild(editModal);
+                        elements.overlay.classList.remove('active');
+                    });
+                    
+                    // إغلاق عند النقر خارج النافذة
+                    editModal.addEventListener('click', function(e) {
+                        if (e.target === editModal) {
+                            document.body.removeChild(editModal);
+                            elements.overlay.classList.remove('active');
+                        }
+                    });
+                    
+                    // السماح بالدخول بالزر Enter في الحقول
+                    editModal.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+                            e.preventDefault();
+                            saveQuestionEdit(questionId, editModal);
+                        }
+                    });
+                } else {
+                    alert('لم يتم العثور على السؤال');
+                }
+            });
+        }
+        
+        // حفظ تعديل السؤال
+        function saveQuestionEdit(questionId, editModal) {
+            const questionText = editModal.querySelector('#edit-question-text').value.trim();
+            const questionType = editModal.querySelector('#edit-question-type').value;
+            const category = editModal.querySelector('#edit-question-category').value.trim();
+            const difficulty = editModal.querySelector('#edit-question-difficulty').value;
+            const year = editModal.querySelector('#edit-question-year').value;
+            const section = editModal.querySelector('#edit-question-section').value;
+            const subject = editModal.querySelector('#edit-question-subject').value;
+            const lesson = editModal.querySelector('#edit-question-lesson').value;
+            
+            if (!questionText) {
+                alert('الرجاء إدخال نص السؤال');
+                return;
+            }
+            
+            if (!section) {
+                alert('الرجاء اختيار قسم');
+                return;
+            }
+            
+            let correctAnswer;
+            let questionData = {
+                text: questionText,
+                type: questionType,
+                category: category || '',
+                difficulty,
+                year,
+                section,
+                subject: subject || '',
+                lesson: lesson || '',
+                updatedAt: new Date().toISOString()
+            };
+            
+            if (questionType === 'mcq') {
+                correctAnswer = editModal.querySelector('input[name="edit-correct-answer"]:checked')?.value;
+                
+                for (let i = 1; i <= 4; i++) {
+                    const optionValue = editModal.querySelector(`#edit-option${i}`).value.trim();
+                    if (optionValue) {
+                        questionData[`option${i}`] = optionValue;
+                    }
+                }
+                
+                if (!questionData.option1 || !questionData.option2) {
+                    alert('الرجاء إدخال خيارين على الأقل');
+                    return;
+                }
+                
+                if (!correctAnswer) {
+                    alert('الرجاء تحديد الإجابة الصحيحة');
+                    return;
+                }
+            } else {
+                correctAnswer = editModal.querySelector('#edit-tf-correct-answer').value;
+            }
+            
+            questionData.correctAnswer = correctAnswer;
+            
+            // تحديث السؤال في Firebase
+            database.ref('questions/' + questionId).update(questionData)
+                .then(() => {
+                    alert('تم تحديث السؤال بنجاح');
+                    
+                    // إزالة النافذة
+                    document.body.removeChild(editModal);
+                    elements.overlay.classList.remove('active');
+                    
+                    // إعادة تحميل قائمة الأسئلة
+                    loadQuestionsForAdmin();
+                })
+                .catch(error => {
+                    alert('حدث خطأ أثناء تحديث السؤال: ' + error.message);
+                });
         }
         
         // عرض رسالة عدم وجود إختبارات
